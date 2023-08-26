@@ -2,16 +2,16 @@ import mongoose from "mongoose";
 const productSchema = new mongoose.Schema({
     nameProduct:{
         type:String,
-        require:true
+        required:true
     },price:{
         type:Number,
-        require:true
+        required:true
     },weight:{
         type:Number,
-        require:true
+        required:true
     },typeWeight:{
         type:String,
-        require:true
+        required:true
     }
 })
 export default mongoose.model("product", productSchema)
