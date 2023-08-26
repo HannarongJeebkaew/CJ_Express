@@ -325,7 +325,7 @@ export default function Dataproducttable() {
     // console.log("delete");
     event.stopPropagation();
     await axios
-      .delete("http://localhost:5000/api/product/" + _id,{ headers: {
+      .delete(import.meta.env.VITE_REACT_APP_API+"/product/" + _id,{ headers: {
         authtoken: localStorage.getItem("token"),
       },})
       .then((res) => {
@@ -361,7 +361,7 @@ export default function Dataproducttable() {
     if (typeEditData === "adddata") {
       // console.log("productAdddata", product);
       await axios
-        .post("http://localhost:5000/api/product/", product,{ headers: {
+        .post(import.meta.env.VITE_REACT_APP_API+"/product/", product,{ headers: {
           authtoken: localStorage.getItem("token"),
         },})
         .then((res) => {
@@ -380,7 +380,7 @@ export default function Dataproducttable() {
         });
     } else if (typeEditData === "editdata") {
       await axios
-        .put("http://localhost:5000/api/product/" + _id, product,{ headers: {
+        .put(import.meta.env.VITE_REACT_APP_API+"/product/" + _id, product,{ headers: {
           authtoken: localStorage.getItem("token"),
         },})
         .then((res) => {
@@ -402,7 +402,7 @@ export default function Dataproducttable() {
   };
   const getdataProduct = async () => {
     await axios
-      .get("http://localhost:5000/api/product",{ headers: {
+      .get(import.meta.env.VITE_REACT_APP_API+"/product",{ headers: {
         authtoken: localStorage.getItem("token"),
       },})
       .then((res) => {
