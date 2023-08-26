@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
-export default function Notfound404({ text }) {
+export default function Notfound404({ text,path}) {
   return (
     <Box
       sx={{
@@ -17,7 +17,7 @@ export default function Notfound404({ text }) {
           <Grid xs={6}>
             <Typography variant="h1">404</Typography>
             <Typography variant="h6">{text}</Typography>
-            <Link to="/login">
+            <Link to={path}>
               {" "}
               <Button variant="contained">Back Home</Button>
             </Link>

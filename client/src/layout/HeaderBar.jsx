@@ -17,7 +17,7 @@ const HeaderBar = () => {
   const handleLogout=()=>{
     distpatch(logout())
     setAnchorEl(null);
-    navigate('/')
+    navigate('/login')
 }
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);

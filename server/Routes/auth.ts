@@ -6,7 +6,6 @@ import { auth } from "../Middlewares/auth";
 //localhost:5000/api/register/
 router.post("/register", register);
 router.post("/login", login);
-router.post("/add", login);
 router.post("/current-user",auth, currentUser);
 
 export default router;

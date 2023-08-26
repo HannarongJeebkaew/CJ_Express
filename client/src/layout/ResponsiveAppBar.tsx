@@ -63,10 +63,13 @@ function ResponsiveAppBar() {
     const distpatch = useDispatch()
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const handleLogout=()=>{
+    const handleLogout= async()=>{
+        console.log("dasdsads");
+        
         distpatch(logout())
         setAnchorElUser(null);
-        navigate('/')
+        navigate('/login')
+        
     }
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);

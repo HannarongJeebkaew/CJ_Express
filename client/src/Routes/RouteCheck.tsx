@@ -10,9 +10,14 @@ import { useSelector } from "react-redux";
 import Notfound404 from '../components/pages/Notfound404'
 interface RouteCheckProps {
   children: React.ReactNode;
+  isDataLoaded:boolean
 }
-const RouteCheck: React.FC<RouteCheckProps>  = ({ children }) => {
+const RouteCheck: React.FC<RouteCheckProps>  = ({ children,isDataLoaded }) => {
   const user = useSelector((state:any) => state.user);
+  console.log("isLoaded",isDataLoaded,user);
+  if(isDataLoaded===false){
+    return <div>Loading</div>
+  }
   return user && user.user.token ?
     <div className="app">
       <SideBar text={user.name}/>
@@ -22,9 +27,6 @@ const RouteCheck: React.FC<RouteCheckProps>  = ({ children }) => {
           <Box m="20px">{children}</Box>
         </div>
       </main>
-    </div>:<Notfound404 text="No Login!!!!!!"></Notfound404>
-  
-  
+    </div>:<Notfound404 text="No Login!!!!!!" path="/login"></Notfound404>
 };
-
 export default RouteCheck;

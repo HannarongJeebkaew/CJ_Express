@@ -1,5 +1,5 @@
 import React from "react";
-import "./Popup.css";
+import "./popup.css";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -26,7 +26,7 @@ const Popup = (props) => {
           <label>
             ราคาสินค้า:
             <input
-              type="text"
+              type="number"
               value={props.product.price}
               onChange={props.handleChange}
               name="price"
@@ -35,7 +35,7 @@ const Popup = (props) => {
           <label>
             น้ำหนักสินค้า:
             <input
-              type="text"
+              type="number"
               value={props.product.weight}
               onChange={props.handleChange}
               name="weight"

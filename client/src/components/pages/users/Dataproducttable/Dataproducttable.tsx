@@ -322,10 +322,12 @@ export default function Dataproducttable() {
     setShowPopup(true);
   };
   const handleOpenPopupDelete = async (event, _id) => {
-    console.log("delete");
+    // console.log("delete");
     event.stopPropagation();
     await axios
-      .delete("http://localhost:5000/api/product/" + _id)
+      .delete("http://localhost:5000/api/product/" + _id,{ headers: {
+        authtoken: localStorage.getItem("token"),
+      },})
       .then((res) => {
         console.log(res);
         getdataProduct();
@@ -335,7 +337,7 @@ export default function Dataproducttable() {
       });
   };
   const handleClosePopup = () => {
-    setProduct({ nameProduct: "", price: "", weight: "", typeWeight: "" });
+    setProduct({ nameProduct: "", price: 0, weight: 0, typeWeight: "" });
     setShowPopup(false);
   };
   const handleDelete = () => {
@@ -343,12 +345,12 @@ export default function Dataproducttable() {
   };
   const [product, setProduct] = useState({
     nameProduct: "",
-    price: "",
-    weight: "",
+    price: 0,
+    weight: 0,
     typeWeight: "",
   });
   const handleChange = (event) => {
-    console.log("Product", product);
+    // console.log("Product", product);
     const { name, value } = event.target;
     setProduct((prevProduct) => ({
       ...prevProduct,
@@ -357,17 +359,19 @@ export default function Dataproducttable() {
   };
   const handleAddDataAndEditData = async () => {
     if (typeEditData === "adddata") {
-      console.log("productAdddata", product);
+      // console.log("productAdddata", product);
       await axios
-        .post("http://localhost:5000/api/product/", product)
+        .post("http://localhost:5000/api/product/", product,{ headers: {
+          authtoken: localStorage.getItem("token"),
+        },})
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setShowPopup(false);
           getdataProduct();
           setProduct({
             nameProduct: "",
-            price: "",
-            weight: "",
+            price: 0,
+            weight: 0,
             typeWeight: "",
           });
         })
@@ -376,14 +380,16 @@ export default function Dataproducttable() {
         });
     } else if (typeEditData === "editdata") {
       await axios
-        .put("http://localhost:5000/api/product/" + _id, product)
+        .put("http://localhost:5000/api/product/" + _id, product,{ headers: {
+          authtoken: localStorage.getItem("token"),
+        },})
         .then((res) => {
           setShowPopup(false);
           getdataProduct();
           setProduct({
             nameProduct: "",
-            price: "",
-            weight: "",
+            price: 0,
+            weight: 0,
             typeWeight: "",
           });
           setTypeEditData(null);
@@ -396,9 +402,11 @@ export default function Dataproducttable() {
   };
   const getdataProduct = async () => {
     await axios
-      .get("http://localhost:5000/api/product")
+      .get("http://localhost:5000/api/product",{ headers: {
+        authtoken: localStorage.getItem("token"),
+      },})
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setRows(res.data);
       })
       .catch((err) => {
@@ -457,10 +465,10 @@ export default function Dataproducttable() {
               rowCount={rows.length}
             />
             <TableBody>
-              {console.log(rows)}
+              {/* {console.log(rows)} */}
               {visibleRows ? (
                 visibleRows.map((row, index) => {
-                  console.log(index);
+                  // console.log(index);
                   const isItemSelected = isSelected(row._id);
                   const labelId = `enhanced-table-checkbox-${index}`;
                   return (
@@ -490,7 +498,7 @@ export default function Dataproducttable() {
                         className="table-cell"
                       >
                         {row.nameProduct.length > 20
-                          ? row.nameProduct.slice(0, 20) + "..."
+                          ? row.nameProduct.toString().slice(0, 20) + "..."
                           : row.nameProduct}
                       </TableCell>
                       <TableCell align="right">

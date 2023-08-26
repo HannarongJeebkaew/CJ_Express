@@ -12,6 +12,7 @@ export const list = async(req:Request,res:Response)=>{
 }
 export const create = async(req:Request,res:Response)=>{
     try{
+        console.log(req.body);
         const product = new Product(req.body).save()
         res.send(product)
     }catch(err){
