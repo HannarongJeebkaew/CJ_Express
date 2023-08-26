@@ -18,6 +18,9 @@ import Logo from "../../../../assets/logo.png";
 import CJ_More from "../../../../assets/ร้าน-CJ-More.jpg";
 import CJ_More1 from "../../../../assets/BB11194-C97E686-8E43638.jpg";
 import { loginUser } from "../../../../api/auth";
+import {login} from "../../../../store/userSlice"
+import { useDispatch } from "react-redux";
+
 interface FormElements extends HTMLFormControlsCollection {
   username: HTMLInputElement;
   password: HTMLInputElement;
@@ -29,6 +32,7 @@ interface SignInFormElement extends HTMLFormElement {
 function ColorSchemeToggle({ onClick, ...props }: IconButtonProps) {
   const { mode, setMode } = useColorScheme();
   const [mounted, setMounted] = React.useState(false);
+ 
   React.useEffect(() => {
     setMounted(true);
   }, []);
@@ -64,6 +68,7 @@ export default function LoginPage() {
   const [usernameError, setUsernameError] = React.useState<string>("");
   const [passwordError, setPasswordError] = React.useState<string>("");
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const handleSubmit = async(event: React.FormEvent<SignInFormElement>) => {
     event.preventDefault();
     const formElements = event.currentTarget.elements;
@@ -72,7 +77,9 @@ export default function LoginPage() {
     const handleLogin = async () => {
       await loginUser(usernameValue, passwordValue)
         .then((res) => {
+          console.log(res);
           if (res.data.token) {
+            dispatch(login({name:res.data.payload.user.name,token:res.data.token}))
             alert("login success")
             localStorage.setItem("token", res.data.token);
             navigate('/home')
