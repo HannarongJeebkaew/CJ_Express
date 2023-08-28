@@ -7,14 +7,14 @@ const User = mongoose.model("User", userSchema);
 export const register = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
-    
+    // console.log(req.body);
     const user = await User.findOne({ username });
-    const salt = await bcrypt.genSalt(10);
+    // const salt = bcrypt.genSaltSync(10);
     if (!user) {
       const newUser = new User({ username, email, password });
-      newUser.password =await bcrypt.hash(password,salt);
+      newUser.password =await bcrypt.hash(password,10);
     await newUser.save();
-    res.status(201).send({ message: "User registered" });
+    return res.status(200).send({ message: "User registered" ,_id:newUser._id});
     }else{
       return res.status(401).send({ message: "มี username นี้อยู่ในระบบแล้ว" });
     }
@@ -26,9 +26,9 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username},{new:true});
-    console.log("login",user);
+    const user = await User.findOneAndUpdate({username},{new:true});
     if(user){
+      // console.log("login",user);
       const isMatch =await bcrypt.compare(password,user.password)
       if(!isMatch){
           return res.status(400).send("Password Invalid!!!")
@@ -36,13 +36,14 @@ export const login = async (req: Request, res: Response) => {
       const token = jwt.sign({ id: user._id }, "jwtsecret", {
         expiresIn: "1h",
       });
-      console.log("token",token);
+      // console.log("token",token);
       
       const payload = {user:{
         name:user.username,
+        
         token:token
       }}
-      res.send({ token ,payload});
+      return res.status(200).send({ token ,payload});
   }else{
     return res.status(401).send({ message: "Invalid username or password" });
   }
@@ -55,10 +56,10 @@ export const login = async (req: Request, res: Response) => {
 
 export const currentUser = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const user = await User.findOne({_id:req.body.id}).select('-password').exec()
-    console.log("user",user);
-    res.send(user);
+    // console.log("user",user);
+    return res.status(200).send(user);
   } catch (err) {
     console.log(err);
   }

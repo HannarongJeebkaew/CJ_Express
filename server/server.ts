@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
 import fs from 'fs'
 import cors from 'cors';
 import path from 'path';
